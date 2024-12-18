@@ -8,7 +8,9 @@ class FileToProcess:
     def __init__(self, filepath):
         self.filepath = filepath
 
-    def extract_content(self): # Need to review removing Astro specific material
+    def extract_content(self): 
+        # Need to review removing Astro specific material
+        # Only need to prepare one content list
         capturing = False
         content = []
         additional_content = []
