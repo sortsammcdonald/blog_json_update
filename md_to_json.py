@@ -94,7 +94,7 @@ def main():
 
     cc_type = ['CC BY: https://creativecommons.org/licenses/by/4.0/', 'CC BY-SA: https://creativecommons.org/licenses/by-sa/4.0/', 'CC BY-NC: https://creativecommons.org/licenses/by-nc/4.0/', 'CC BY-NC-SA: https://creativecommons.org/licenses/by-nc-sa/4.0/', 'CC BY-ND: https://creativecommons.org/licenses/by-nd/4.0/', 'CC BY-NC-ND: https://creativecommons.org/licenses/by-nc-nd/4.0/', ' CC0: https://creativecommons.org/publicdomain/zero/1.0/']
 
-    text_processor = FileToProcess('2024-10-05-adding_a_json_feed.md')
+    text_processor = FileToProcess('test_file.md')
     primary_content, secondary_content = text_processor.extract_content()
 
     primary_filename = 'processed_header.txt'
