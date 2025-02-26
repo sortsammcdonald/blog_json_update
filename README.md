@@ -4,6 +4,14 @@ Decided to look at this project again, my goal is to:
 - Update the code to that to generate a JSON feed based on Squarespace blog post.
 - Use the JSON feed to generate a RAG implementation for an LLM to answer questions relevant to to the topics.
 
+# 2025.02.26
+
+- Added json_processing programme
+
+This file should contain all code for processing the JSON file. Currently it only has function to check for replicate entries in a JSON file. But I should move over json functions in md_to_json to that file.
+
+Also it's not a well written programme at this stage.
+
 # 2024.12.19
 
 In testing the programme works, I should be able to create a JSON file containing all my main blog's posts. 
