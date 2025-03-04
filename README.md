@@ -4,6 +4,10 @@ Decided to look at this project again, my goal is to:
 - Update the code to that to generate a JSON feed based on Squarespace blog post.
 - Use the JSON feed to generate a RAG implementation for an LLM to answer questions relevant to to the topics.
 
+# 2025.03.01
+
+Not too much progress today. Still debating best way to check for new entries 
+
 # 2025.02.28
 
 In addition to some more json operations I would like to implement some file operations, in particular creating a source of existing files that can be checked against if new files are added.
