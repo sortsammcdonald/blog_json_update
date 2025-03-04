@@ -64,6 +64,18 @@ class GenHtml:
         cleaned_html = re.sub(r'^\s+|\s+$', '', cleaned_html, flags=re.MULTILINE)  # Trim spaces at each line's start and end
         return cleaned_html
     
+
+class LsMdocs:
+    def __init__(self, directory):
+        self.directory = directory
+
+    def gen_ls_files(self):
+            return [f for f in os.listdir(self.directory) if os.path.isfile(os.path.join(self.directory, f))]
+    
+    def __iter__(self):
+        return iter(self.gen_ls_files())
+    
+    
     
 class UpdateJSON:
     def __init__(self, json_file):
@@ -94,6 +106,7 @@ def main():
 
     cc_type = ['CC BY: https://creativecommons.org/licenses/by/4.0/', 'CC BY-SA: https://creativecommons.org/licenses/by-sa/4.0/', 'CC BY-NC: https://creativecommons.org/licenses/by-nc/4.0/', 'CC BY-NC-SA: https://creativecommons.org/licenses/by-nc-sa/4.0/', 'CC BY-ND: https://creativecommons.org/licenses/by-nd/4.0/', 'CC BY-NC-ND: https://creativecommons.org/licenses/by-nc-nd/4.0/', ' CC0: https://creativecommons.org/publicdomain/zero/1.0/']
 
+    ls_md_files = LsMdocs('test')
 
     def create_json(md_to_process):
         text_processor = FileToProcess(md_to_process)
@@ -129,6 +142,9 @@ def main():
     
     test = create_json('test_file.md')
     test
+
+    for i in ls_md_files:
+        create_json(i)
 
 if __name__ == '__main__':
     main()

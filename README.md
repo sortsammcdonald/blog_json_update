@@ -4,6 +4,12 @@ Decided to look at this project again, my goal is to:
 - Update the code to that to generate a JSON feed based on Squarespace blog post.
 - Use the JSON feed to generate a RAG implementation for an LLM to answer questions relevant to to the topics.
 
+# 2025.03.04
+
+Encapulasted the steps in main into a function. Maybe could be tidier in function, but I think this could enable me to iterate over multiple files in a folder. 
+
+The programme can now iterate over all files in a directory to build a JSON file.
+
 # 2025.03.01
 
 Not too much progress today. Still debating best way to check for new entries 
