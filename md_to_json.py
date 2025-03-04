@@ -94,24 +94,27 @@ def main():
 
     cc_type = ['CC BY: https://creativecommons.org/licenses/by/4.0/', 'CC BY-SA: https://creativecommons.org/licenses/by-sa/4.0/', 'CC BY-NC: https://creativecommons.org/licenses/by-nc/4.0/', 'CC BY-NC-SA: https://creativecommons.org/licenses/by-nc-sa/4.0/', 'CC BY-ND: https://creativecommons.org/licenses/by-nd/4.0/', 'CC BY-NC-ND: https://creativecommons.org/licenses/by-nc-nd/4.0/', ' CC0: https://creativecommons.org/publicdomain/zero/1.0/']
 
-    text_processor = FileToProcess('test_file.md')
-    primary_content, secondary_content = text_processor.extract_content()
 
-    primary_filename = 'processed_header.txt'
-    secondary_filename = 'additional_content.txt'
+    def create_json(md_to_process):
+        text_processor = FileToProcess(md_to_process)
+        primary_content, secondary_content = text_processor.extract_content()
+        primary_filename = 'processed_header.txt'
+        secondary_filename = 'additional_content.txt'
 
-    text_processor.write_to_file(primary_filename, primary_content)
-    text_processor.write_to_file(secondary_filename, secondary_content)
+        text_processor.write_to_file(primary_filename, primary_content)
+        text_processor.write_to_file(secondary_filename, secondary_content)
+        dict_processor = GenDict(primary_content)  # Generate dictionary from primary content
+        prim_dict = dict_processor.gen_dict()
+        html_processor = GenHtml(secondary_content)  # Generate HTML from secondary content
+        html_text = html_processor.gen_html()
 
-    dict_processor = GenDict(primary_content)  # Generate dictionary from primary content
-    prim_dict = dict_processor.gen_dict()
+        prim_dict = dict_processor.supplement_dict(html_text, 'html')
+        prim_dict = dict_processor.supplement_dict(cc_type[0], 'license')
 
-    html_processor = GenHtml(secondary_content)  # Generate HTML from secondary content
-    html_text = html_processor.gen_html()
+        json_file = UpdateJSON('entries.json')
+        json_output = json_file.append_json(prim_dict)
 
-
-    prim_dict = dict_processor.supplement_dict(html_text, 'html')
-    prim_dict = dict_processor.supplement_dict(cc_type[0], 'license')
+        return json_output
 
     #prim_dict['html'] = html_text
     #prim_dict['license'] = cc_type[0]
@@ -123,10 +126,9 @@ def main():
     # with open('entries.json', 'w') as file:
     #     json.dump(prim_dict,file, indent=4)
 
-    json_file = UpdateJSON('entries.json')
-    json_output = json_file.append_json(prim_dict)
-
-    print(json_output)
+    
+    test = create_json('test_file.md')
+    test
 
 if __name__ == '__main__':
     main()
