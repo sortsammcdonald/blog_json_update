@@ -3,6 +3,7 @@ import markdown
 import re
 import json
 import os
+#import json_processing
 
 class FileToProcess:
     def __init__(self, filepath):
@@ -63,19 +64,17 @@ class GenHtml:
         cleaned_html = re.sub(r'\s+', ' ', html)  # Collapse multiple spaces to one
         cleaned_html = re.sub(r'^\s+|\s+$', '', cleaned_html, flags=re.MULTILINE)  # Trim spaces at each line's start and end
         return cleaned_html
-    
 
 class LsMdocs:
     def __init__(self, directory):
         self.directory = directory
 
     def gen_ls_files(self):
-            return [f for f in os.listdir(self.directory) if os.path.isfile(os.path.join(self.directory, f))]
-    
+        return [os.path.join(self.directory, f) for f in os.listdir(self.directory) if os.path.isfile(os.path.join(self.directory, f))]
+
     def __iter__(self):
         return iter(self.gen_ls_files())
-    
-    
+
     
 class UpdateJSON:
     def __init__(self, json_file):
@@ -127,7 +126,7 @@ def main():
         json_file = UpdateJSON('entries.json')
         json_output = json_file.append_json(prim_dict)
 
-        return json_output
+        #return json_output
 
     #prim_dict['html'] = html_text
     #prim_dict['license'] = cc_type[0]
@@ -140,11 +139,16 @@ def main():
     #     json.dump(prim_dict,file, indent=4)
 
     
-    test = create_json('test_file.md')
-    test
+    #test = create_json('test_file3.md')
+    #test
 
-    for i in ls_md_files:
+    file_path = '/home/sammcdonald/Documents/coding_projects/blog_json_update/test'
+    for i in LsMdocs(file_path):
+    #    print(i)
         create_json(i)
+
+    #create_json(file_path)
+    #create_json('test_file3.md')
 
 if __name__ == '__main__':
     main()
