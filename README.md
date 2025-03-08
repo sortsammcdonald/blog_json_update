@@ -4,6 +4,13 @@ Decided to look at this project again, my goal is to:
 - Update the code to that to generate a JSON feed based on Squarespace blog post.
 - Use the JSON feed to generate a RAG implementation for an LLM to answer questions relevant to to the topics.
 
+
+# 2025.03.08
+
+Had to adjust the md_to_json file, it wasn't adding all entries to JSON file.
+
+Next have to update JSON processing file and integrate into md_to_json file.
+
 # 2025.03.04
 
 Encapulasted the steps in main into a function. Maybe could be tidier in function, but I think this could enable me to iterate over multiple files in a folder. 
