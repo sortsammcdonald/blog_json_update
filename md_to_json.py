@@ -3,7 +3,6 @@ import markdown
 import re
 import json
 import os
-#import json_processing
 
 class FileToProcess:
     def __init__(self, filepath):
@@ -20,17 +19,16 @@ class FileToProcess:
             for line in file:
                 line = line.strip()
                 if line == "---":
-                    if capturing:
-                        if second_marker_found:
-                            break
-                        second_marker_found = True
-                        continue
-                    capturing = True
+                    capturing = not capturing  # Toggle capturing state
+                    if capturing and additional_content:
+                        break  # Stop if second marker found
                     continue
-                if second_marker_found:
-                    additional_content.append(line)
-                elif capturing:
+
+                if capturing:
                     content.append(line)
+                else:
+                    additional_content.append(line)
+    
         return content, additional_content
     
     def write_to_file(self, filename, content):
@@ -83,29 +81,26 @@ class UpdateJSON:
     def append_json(self, new_data):
         try:
             with open(self.json_file, 'r+', encoding='utf-8')as file:
-                data = json.load(file) 
+                try:
+                    data = json.load(file)  # Load existing JSON
+                except json.JSONDecodeError:
+                    data = []  # If file is empty or corrupt, reset it
 
                 data.append(new_data)
                 file.seek(0)
                 file.truncate()
                 json.dump(data, file, indent=4)
-        except FileNotFoundError:
-        # If the file doesn't exist, create it and write the data as a new list
-            with open(self.json_file, 'w', encoding='utf-8') as file:
-                json.dump([new_data], file, indent=4)
-        
-        except json.JSONDecodeError:
-        # If the file is empty or invalid, start a new list
-            with open(self.json_file, 'w', encoding='utf-8') as file:
-                json.dump([new_data], file, indent=4)
 
+        except FileNotFoundError:
+            # If file doesn't exist, create it
+            with open(self.json_file, 'w', encoding='utf-8') as file:
+                json.dump([new_data], file, indent=4)
 def main():
 
     
 
     cc_type = ['CC BY: https://creativecommons.org/licenses/by/4.0/', 'CC BY-SA: https://creativecommons.org/licenses/by-sa/4.0/', 'CC BY-NC: https://creativecommons.org/licenses/by-nc/4.0/', 'CC BY-NC-SA: https://creativecommons.org/licenses/by-nc-sa/4.0/', 'CC BY-ND: https://creativecommons.org/licenses/by-nd/4.0/', 'CC BY-NC-ND: https://creativecommons.org/licenses/by-nc-nd/4.0/', ' CC0: https://creativecommons.org/publicdomain/zero/1.0/']
 
-    ls_md_files = LsMdocs('test')
 
     def create_json(md_to_process):
         text_processor = FileToProcess(md_to_process)
@@ -141,8 +136,20 @@ def main():
     
     #test = create_json('test_file3.md')
     #test
+    #ls_md_files = LsMdocs('test')
 
-    file_path = '/home/sammcdonald/Documents/coding_projects/blog_json_update/test'
+    #file_path = '/home/sammcdonald/Documents/coding_projects/blog_json_update/test'
+    
+    file_path = os.path.abspath('test')  # Convert 'test' to an absolute path
+
+    if not os.path.exists(file_path):
+        print(f"Error: The directory {file_path} does not exist.")
+        return
+
+    ls_md_files = LsMdocs(file_path)
+    for md_file in ls_md_files:
+        create_json(md_file)
+    
     for i in LsMdocs(file_path):
     #    print(i)
         create_json(i)
