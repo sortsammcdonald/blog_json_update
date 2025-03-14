@@ -123,6 +123,11 @@ def main():
 
         #return json_output
 
+    def update_json(json_to_process,md_file):
+        json_file = UpdateJSON(json_to_process)
+        json_file = json_file.append_json(md_file)
+        return json_file
+
     #prim_dict['html'] = html_text
     #prim_dict['license'] = cc_type[0]
     
@@ -150,12 +155,17 @@ def main():
     for md_file in ls_md_files:
         create_json(md_file)
     
-    for i in LsMdocs(file_path):
+    #for i in LsMdocs(file_path):
     #    print(i)
-        create_json(i)
+    #    create_json(i)
 
     #create_json(file_path)
     #create_json('test_file3.md')
+
+    md_to_update = LsMdocs('/home/sammcdonald/Documents/coding_projects/blog_json_update/test/test_file copy 2.md')
+
+    updated_json = update_json('entries.json', md_to_update)
+
 
 if __name__ == '__main__':
     main()

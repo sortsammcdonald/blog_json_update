@@ -8,6 +8,8 @@ Decided to look at this project again, my goal is to:
 
 I've updated the `md_to_json` and `json_processing` files. I think I will keep them seperate so `md_to_json` is used generate the initial json file, while `json_processing` will be used to add new entries to existing files and check there are no duplicate entries.
 
+Creating an append function is quite challenging. Will have to review this next time.
+
 ## Next steps
 - Add append function to `json_processing`.
 
