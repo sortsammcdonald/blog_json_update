@@ -1,14 +1,14 @@
-import unicodedata
+import os
+import json
 import markdown
 import re
-import json
-import os
+from json_processing import CorrectJson
 
 class FileToProcess:
     def __init__(self, filepath):
         self.filepath = filepath
 
-    def extract_content(self): 
+    def extract_content(self):
         capturing = False
         content = []
         additional_content = []
@@ -24,11 +24,6 @@ class FileToProcess:
                     additional_content.append(line)
         return content, additional_content
 
-    def write_to_file(self, filename, content):
-        with open(filename, 'w', encoding='utf-8') as file:
-            for line in content:
-                file.write(line + '\n')
-
 class GenDict:
     def __init__(self, content):
         self.content = content
@@ -39,8 +34,8 @@ class GenDict:
             if ':' in line:
                 key, value = line.split(':', 1)
                 self.ref_dict[key.strip()] = value.strip()
-        return self.ref_dict    
-    
+        return self.ref_dict
+
     def supplement_dict(self, content_val, key_name):
         self.ref_dict[key_name] = content_val
         return self.ref_dict
@@ -68,6 +63,10 @@ class LsMdocs:
 class UpdateJSON:
     def __init__(self, json_file):
         self.json_file = json_file
+        # Ensure the JSON file is initialized as a list
+        if not os.path.exists(self.json_file):
+            with open(self.json_file, 'w', encoding='utf-8') as file:
+                json.dump([], file)
 
     def append_json(self, new_data):
         try:
@@ -114,10 +113,20 @@ class Entries:
             entry.create_json()
 
 def main():
-    # Generate initial entries file
-    directory = 'test'  
+    # Process all Markdown files in the 'test' directory
+    directory = 'test'
     entries = Entries(directory)
     entries.gen_entries()
+
+    # To append a single Markdown file to the existing JSON entries
+    single_md_file = '/home/sammcdonald/Documents/coding_projects/blog_json_update/test/test_file copy 3.md'
+    entry = JsonEntry(single_md_file)
+    entry.create_json()
+
+    json_to_check = CorrectJson('entries.json', 'entries.json')
+    json_to_check.gen_correct_json()
+
+
 
 if __name__ == '__main__':
     main()
