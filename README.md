@@ -4,6 +4,12 @@ Decided to look at this project again, my goal is to:
 - Update the code to that to generate a JSON feed based on Squarespace blog post.
 - Use the JSON feed to generate a RAG implementation for an LLM to answer questions relevant to to the topics.
 
+# 2025.03.22
+
+I have refactored the code so now all functions are defined before main. 
+
+Still need to work out how to append single file.
+
 # 2025.03.14
 
 I've updated the `md_to_json` and `json_processing` files. I think I will keep them seperate so `md_to_json` is used generate the initial json file, while `json_processing` will be used to add new entries to existing files and check there are no duplicate entries.
