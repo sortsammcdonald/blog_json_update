@@ -119,7 +119,7 @@ def main():
     entries.gen_entries()
 
     # To append a single Markdown file to the existing JSON entries
-    single_md_file = '/home/sammcdonald/Documents/coding_projects/blog_json_update/test/test_file copy 3.md'
+    single_md_file = '/home/test/test_file copy 3.md'
     entry = JsonEntry(single_md_file)
     entry.create_json()
 
