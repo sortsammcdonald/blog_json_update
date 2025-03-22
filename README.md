@@ -6,6 +6,10 @@ Decided to look at this project again, my goal is to:
 
 # 2025.03.22
 
+Programme now checks if json file has repeat entries.
+
+Single file now works. Need to check for duplicate entries.
+
 I have refactored the code so now all functions are defined before main. 
 
 Still need to work out how to append single file.
